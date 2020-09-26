@@ -152,7 +152,7 @@ class PD_Send_Notification_Email_Subscriber_Settings{
         $callback = array( $this, 'create_admin_page' );
 
         add_submenu_page( 
-            'options-general.php', 
+            'users.php', 
             $page_title, 
             $menu_title, 
             $capability, 
@@ -323,6 +323,7 @@ class PD_Send_Notification_Email_Subscriber_Settings{
             $emails[] = $subscriber->user_email;
     
         $subject = "[".get_bloginfo('name')."] ";
+        
         if($email_subject){
             $subject .= $email_subject;
         }else{
@@ -335,9 +336,18 @@ class PD_Send_Notification_Email_Subscriber_Settings{
             $body = sprintf( '<p>Hey there is a new entry! See <%s></p>',
                 get_permalink( $post )
             );
-        }    
+        }
+
+        $body = str_replace('{site_name}', get_bloginfo('name'), $body);
+        $body = str_replace('{login_url}', wp_login_url(), $body);
+        $body = str_replace('{site_url}', get_site_url(), $body);
         
         $headers = array('Content-Type: text/html; charset=UTF-8');
+        foreach ($emails as $bcc){
+            $headers[] = 'Bcc: '.$bcc;
+        }
+
+        $email = get_option('admin_email');
 
         ob_start();
         include("templates/email_header.php");
@@ -347,7 +357,7 @@ class PD_Send_Notification_Email_Subscriber_Settings{
         ob_end_clean();
     
         if($email_notification){
-            wp_mail( $emails, $subject, $message, $headers );
+            wp_mail( $email, $subject, $message, $headers );
         }
     }
     
