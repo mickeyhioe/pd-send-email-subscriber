@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: PD Send Email Subscriber
+ * Plugin Name: PD Send Email to All Subscribers
  * Plugin URI: https://pixeldreams.com
  * Description: Plugin to send custom notification email to subscriber
  * Version: 1.0
@@ -145,8 +145,8 @@ class PD_Send_Notification_Email_Subscriber_Settings{
     public function add_plugin_page(){
 
         // Add the menu item and page
-        $page_title = 'Send Email to Subscribers';
-        $menu_title = 'Send Email to Subscribers';
+        $page_title = 'Send Email to All Subscribers';
+        $menu_title = 'Send Email to All Subscribers';
         $capability = 'manage_options';
         $slug = 'pd-send-email-settings';
         $callback = array( $this, 'create_admin_page' );
@@ -168,7 +168,7 @@ class PD_Send_Notification_Email_Subscriber_Settings{
         ?>
         <div class="wrap">
 
-            <h1>PD Send Email Subscriber</h1>
+            <h1>Send Email to All Subscribers</h1>
             <form method="post" action="options.php">
             <?php
                 // This prints out all hidden setting fields
@@ -259,7 +259,7 @@ class PD_Send_Notification_Email_Subscriber_Settings{
      * Print all fields
      */  
     public function print_section_info() {
-        print 'Email settings to send notification to all subscribers when there is new published post';
+        print 'Email settings to send notification email';
     }
 
     public function email_subject_callback() {
